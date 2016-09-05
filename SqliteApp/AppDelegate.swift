@@ -15,9 +15,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+       
+        //Cuando la app termina de cargar copia la base de datos al directorio
+        copiarBaseDatos("Coches")
+        
+        
         return true
     }
+    
+    
+    func copiarBaseDatos(nombreDB: String) {
+    
+        let objetoFileManager = NSFileManager.defaultManager()
+        let objetoFileHerper = FileHelper()
+        let pathDbEnDocumentos = objetoFileHerper.pathArchivoEnCarpetaDocumentos(nombreDB)
+        let pathDbEnBunble = objetoFileHerper.pathBaseDatosEnBundle(nombreDB)
+    
+        //Pasar archivo de nuestra base de datos al path de carpeta de documentos
+        
+        
+        if  objetoFileHerper.existeArchivoEnDocumentos(nombreDB) {
+        
+            //Ya tengo la BD en la carpeta de documentos
+
+        
+        }else {
+            
+            do{
+            
+                try objetoFileManager.copyItemAtPath(pathDbEnBunble, toPath: pathDbEnDocumentos )
+            
+            
+            
+            }catch _{
+            
+                print("Error al copiar archivo al directorio de documentos")
+            
+            
+            
+            }
+        
+        
+        
+        }
+    
+    }
+    
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
